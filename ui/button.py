@@ -1,6 +1,6 @@
 import pygame as pg
 
-from .metaclases.abstarct_button import AbstractButton
+from .metaclases.abstract_button import AbstractButton
 
 
 class TextButton(AbstractButton):
@@ -14,3 +14,4 @@ class ImageButton(AbstractButton):
     def __init__(self, x: int, y: int, image: pg.Surface, call_back_function: callable):
         self.image = image
         super().__init__(x, y, call_back_function)
+
