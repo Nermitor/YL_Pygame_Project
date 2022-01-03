@@ -8,10 +8,9 @@ class VenvIO:
         self.dotenv_file = dotenv.find_dotenv()
         dotenv.load_dotenv()
 
-    @staticmethod
-    def get_value(key):
-        return os.getenv(key)
+    def __getitem__(self, item):
+        return os.getenv(item)
 
-    def set_value(self, key, value):
+    def __setitem__(self, key, value):
         os.environ[key] = value
         dotenv.set_key(self.dotenv_file, key, value)
