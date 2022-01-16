@@ -1,7 +1,7 @@
 import pygame as pg
-from utils.jsonreader import JsonReader
 
 from entities.player.animations.animation import anims, new_size
+from utils.jsonreader import JsonReader
 
 individual = JsonReader("entities/player/config.json")["physics"]
 common = JsonReader("entities/config.json")['physics']

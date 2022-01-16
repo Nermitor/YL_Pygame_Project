@@ -1,5 +1,4 @@
 from glob import glob
-import pygame as pg
 
 from pyganim import PygAnimation as Anim
 
