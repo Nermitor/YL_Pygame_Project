@@ -1,2 +1,2 @@
 from . import player
-from . import player_animation
+from .animations import animation
