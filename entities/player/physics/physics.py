@@ -16,3 +16,7 @@ JUMP_POWER = player_physics['jump_power'] * total_scale_factor
 GRAVITY = player_physics['gravity'] * total_scale_factor
 FAST_RUN_SPEED = player_physics['fast_run_speed'] * total_scale_factor
 
+
+def totalize(x):
+    return total_scale_factor * x
+

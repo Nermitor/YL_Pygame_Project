@@ -35,6 +35,7 @@ def main():
                 camera.apply(sprite)
 
         game_map.draw(screen)
+        game_map.get_player().draw_colliders(screen)  # debug
         pg.display.update()
 
     pg.quit()

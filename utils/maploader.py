@@ -24,13 +24,13 @@ class Map:
     def init_sprites(self):
         for tile_x in range(self.width):
             for tile_y in range(self.height):
-                platform_image = self.map.get_tile_image(tile_x, tile_y, 0)
+                platform_image = self.map.get_tile_image(tile_x, tile_y, 1)
                 if platform_image is not None:
                     self.sprites['platforms'].add(
                         Platform.from_tile_cords((tile_x, tile_y), (self.map.tilewidth, self.map.tileheight), platform_image)
 
                     )
-                player_image = self.map.get_tile_image(tile_x, tile_y, 1)
+                player_image = self.map.get_tile_image(tile_x, tile_y, 0)
                 if player_image is not None:
                     self.sprites['player'].add(Player(tile_x * self.map.tilewidth, tile_y * self.map.tileheight))
 

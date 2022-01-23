@@ -8,7 +8,7 @@ animation_config = JsonReader("entities/player/animations/animations.json")
 common_config = JsonReader('common.json')
 asset_folder = "entities/player/animations/assets/"
 exp_asset_folder = "entities/player/animations/exp/"
-default_size = 26, 35
+default_size = 26, 32
 scale_factor = animation_config['scale_factor'] * common_config['scale_factor']
 new_size = (default_size[0] * scale_factor, default_size[1] * scale_factor)
 

@@ -1,7 +1,8 @@
 import pygame as pg
 
 from entities.player.animations.animation import anims, new_size
-from entities.player.physics.physics import DEFAULT_DIR, JUMP_POWER, GRAVITY, MOVE_SPEED, total_scale_factor, FAST_RUN_SPEED
+from entities.player.physics.physics import DEFAULT_DIR, JUMP_POWER, GRAVITY, MOVE_SPEED,\
+    total_scale_factor, FAST_RUN_SPEED, totalize
 
 
 class Player(pg.sprite.Sprite):
@@ -9,21 +10,23 @@ class Player(pg.sprite.Sprite):
         super().__init__()
         self.image = pg.Surface(new_size)
         self.image.convert_alpha()
-        self.rect = self.image.get_rect()
-        self.rect.x, self.rect.y = x * total_scale_factor, y * total_scale_factor
-
+        self.rect = pg.Surface(new_size).get_rect()
+        self.rect.x, self.rect.y = totalize(x), totalize(y)
+        self.hit_box = self.rect.inflate((totalize(-15)), totalize(-10))
+        self.hit_box_distance = totalize(4)
 
         self.dir = DEFAULT_DIR
         self.xvel = 0
         self.yvel = 0
         self.onGround = False
         self.isFly = False
-        self.wall_check_point_large = 30
 
         self.default_jumps_count = 2
         self.jumps = self.default_jumps_count
-
         self.last_update_is_jump = False
+
+        self.wall_check_point_large_x = totalize(6)
+        self.wall_check_point_large_y = totalize(6)
         self.on_wall = False
         self.wall_slide_speed = 0.5
 
@@ -44,10 +47,11 @@ class Player(pg.sprite.Sprite):
 
         if up:
             if self.on_wall and not self.last_update_is_jump:
-                self.yvel = -JUMP_POWER
-                self.last_update_is_jump = True
-                self.on_wall = False
-                self.jumps = self.default_jumps_count - 1
+                if self.dir == 1 and left or self.dir == -1 and right or not(left or right):
+                    self.yvel = -JUMP_POWER
+                    self.last_update_is_jump = True
+                    self.on_wall = False
+                    self.jumps = self.default_jumps_count - 1
             else:
                 if self.jumps and not self.last_update_is_jump:
                     self.yvel = -JUMP_POWER
@@ -110,13 +114,22 @@ class Player(pg.sprite.Sprite):
         if self.xvel and self.yvel >= 0:
             self.on_wall = False
 
-        self.rect.x += self.xvel # переносим свои положение на xvel
+        self.rect.x += self.xvel  # переносим свои положение на xvel
         self.collide(self.xvel, 0, platforms)
 
         self.wall_check(platforms)
 
         if self.on_wall:
             self.yvel = self.wall_slide_speed
+
+        self.hit_box.y = self.rect.y + self.hit_box_distance
+        if self.xvel and (left or right) or self.on_wall:
+            if self.dir == -1:
+                self.hit_box.x = self.rect.x + self.hit_box_distance
+            else:
+                self.hit_box.right = self.rect.right - self.hit_box_distance
+        else:
+            self.hit_box.center = self.rect.center
 
     def collide(self, xvel, yvel, platforms: pg.sprite.Group):
         for p in platforms:
@@ -140,14 +153,41 @@ class Player(pg.sprite.Sprite):
                     self.rect.top = p.rect.bottom  # то не движется вверх
                     self.yvel = 0  # и энергия прыжка пропадает
 
+    def draw_colliders(self, screen):
+        pg.draw.rect(screen, "red", self.rect, 2)
+        # pg.draw.rect(screen, "black", (self.rect.x, self.rect.y, self.image.get_width(), self.image.get_height()), 2)
+        pg.draw.rect(screen, "dark blue", self.hit_box, 2)
+        p1, p2 = self.get_wall_points()
+        pg.draw.circle(screen, "red", p1, totalize(1))
+        pg.draw.circle(screen, "red", p2, totalize(1))
+
     def wall_check(self, platforms: pg.sprite.Group):
         if self.on_wall:
             self.on_wall = False
-            if self.dir == -1:
-                cur_pos = self.rect.left - self.wall_check_point_large, self.rect.y + self.rect.height // 2
-            else:
-                cur_pos = self.rect.right + self.wall_check_point_large, self.rect.y + self.rect.height // 2
+            p1, p2 = self.get_wall_points()
+            is_p1, is_p2 = False, False
             for p in platforms:
-                if p.rect.collidepoint(*cur_pos):
-                    self.on_wall = True
-                    return
+                if p.rect.collidepoint(*p1):
+                    is_p1 = True
+                if p.rect.collidepoint(*p2):
+                    is_p2 = True
+            self.on_wall = is_p1 and is_p2
+        return self.on_wall
+
+    def raw_wall_check(self, platforms):
+        p1, p2 = self.get_wall_points()
+        is_p1, is_p2 = False, False
+        for p in platforms:
+            if p.rect.collidepoint(*p1):
+                is_p1 = True
+            if p.rect.collidepoint(*p2):
+                is_p2 = True
+        on_wall = is_p1 and is_p2
+        return on_wall
+
+    def get_wall_points(self):
+        if self.dir == -1:
+            return ((self.rect.left - self.wall_check_point_large_x, self.rect.y + self.wall_check_point_large_y),
+                    (self.rect.left - self.wall_check_point_large_x, self.rect.bottom - self.wall_check_point_large_y))
+        return ((self.rect.right + self.wall_check_point_large_x, self.rect.y + self.wall_check_point_large_y),
+                (self.rect.right + self.wall_check_point_large_x, self.rect.bottom - self.wall_check_point_large_y))

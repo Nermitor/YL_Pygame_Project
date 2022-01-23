@@ -6,6 +6,6 @@
   "die_anim_delay": 200,
   "items_anim_delay": 150,
   "wall_slide_anim_delay": 100,
-  "fast_run_anim_delay": 100,
+  "fast_run_anim_delay": 60,
   "scale_factor": 1
 }
