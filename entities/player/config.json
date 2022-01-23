@@ -1,8 +1,0 @@
-{
-  "physics": {
-    "default_dir": 1,
-    "move_speed": 7,
-    "jump_power": 9,
-    "gravity": 0.35
-  }
-}

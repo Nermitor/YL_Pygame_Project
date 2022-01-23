@@ -1,2 +1,3 @@
 from . import player
-from .animations import animation
+from . import animations
+from . import physics

@@ -2,6 +2,7 @@ import pygame as pg
 import pytmx
 
 from environment.platform.platform import Platform
+from entities.player.player import Player
 
 
 class Map:
@@ -21,18 +22,23 @@ class Map:
         self.init_sprites()
 
     def init_sprites(self):
-        s = 1
         for tile_x in range(self.width):
             for tile_y in range(self.height):
-                image = self.map.get_tile_image(tile_x, tile_y, 0)
-                if image is not None:
+                platform_image = self.map.get_tile_image(tile_x, tile_y, 1)
+                if platform_image is not None:
                     self.sprites['platforms'].add(
-                        Platform(tile_x * self.tile_width * s, tile_y * self.tile_height * s,
-                                 pg.transform.scale(image, (self.tile_width * s, self.tile_height * s)))
+                        Platform.from_tile_cords((tile_x, tile_y), (self.map.tilewidth, self.map.tileheight), platform_image)
+
                     )
+                player_image = self.map.get_tile_image(tile_x, tile_y, 0)
+                if player_image is not None:
+                    self.sprites['player'].add(Player(tile_x * self.map.tilewidth, tile_y * self.map.tileheight))
 
     def get_sprite_groups(self):
         return self.sprites.values()
+
+    def get_player(self):
+        return self.sprites['player'].sprites()[0]
 
     def update(self):
         self.sprites['platforms'].update()
