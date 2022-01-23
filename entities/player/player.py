@@ -1,7 +1,7 @@
 import pygame as pg
 
 from entities.player.animations.animation import anims, new_size
-from entities.player.physics.physics import DEFAULT_DIR, JUMP_POWER, GRAVITY, MOVE_SPEED, total_scale_factor
+from entities.player.physics.physics import DEFAULT_DIR, JUMP_POWER, GRAVITY, MOVE_SPEED, total_scale_factor, FAST_RUN_SPEED
 
 
 class Player(pg.sprite.Sprite):
@@ -11,6 +11,7 @@ class Player(pg.sprite.Sprite):
         self.image.convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = x * total_scale_factor, y * total_scale_factor
+
 
         self.dir = DEFAULT_DIR
         self.xvel = 0
@@ -26,6 +27,8 @@ class Player(pg.sprite.Sprite):
         self.on_wall = False
         self.wall_slide_speed = 0.5
 
+        self.fast_run_speed = FAST_RUN_SPEED
+
         self.timer = pg.time.Clock().tick
 
         self.anim = anims[self.dir]['idle']
@@ -37,8 +40,7 @@ class Player(pg.sprite.Sprite):
         left = keys[pg.K_a]
         right = keys[pg.K_d]
         up = keys[pg.K_SPACE]
-
-        self.xvel = 0
+        run = keys[pg.K_LSHIFT]
 
         if up:
             if self.on_wall and not self.last_update_is_jump:
@@ -55,15 +57,18 @@ class Player(pg.sprite.Sprite):
         self.last_update_is_jump = up
 
         if left:
-            self.xvel = -MOVE_SPEED
+            if run:
+                self.xvel = -FAST_RUN_SPEED
+            else:
+                self.xvel = -MOVE_SPEED
             self.dir = -1
 
         if right:
-            self.xvel = MOVE_SPEED
+            if run:
+                self.xvel = FAST_RUN_SPEED
+            else:
+                self.xvel = MOVE_SPEED
             self.dir = 1
-
-        if left or right:
-            self.on_wall = False
 
         if self.isFly:
             if self.on_wall:
@@ -74,7 +79,10 @@ class Player(pg.sprite.Sprite):
                 else:
                     self.anim = anims[self.dir]['jump']
         else:
-            self.anim = anims[self.dir]['run']
+            if run:
+                self.anim = anims[self.dir]['fast_run']
+            else:
+                self.anim = anims[self.dir]['run']
 
         if not (left or right) and not self.isFly:
             self.xvel = 0
@@ -102,7 +110,7 @@ class Player(pg.sprite.Sprite):
         if self.xvel and self.yvel >= 0:
             self.on_wall = False
 
-        self.rect.x += self.xvel  # переносим свои положение на xvel
+        self.rect.x += self.xvel # переносим свои положение на xvel
         self.collide(self.xvel, 0, platforms)
 
         self.wall_check(platforms)
@@ -112,7 +120,6 @@ class Player(pg.sprite.Sprite):
 
     def collide(self, xvel, yvel, platforms: pg.sprite.Group):
         for p in platforms:
-            self.factor = False
             if pg.sprite.collide_rect(self, p):  # если есть пересечение платформы с игроком
                 if xvel > 0:  # если движется вправо
                     self.rect.right = p.rect.left  # то не движется вправо
