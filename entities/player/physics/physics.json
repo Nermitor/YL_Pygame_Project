@@ -1,0 +1,6 @@
+{
+  "default_dir": 1,
+  "move_speed": 2,
+  "jump_power": 5,
+  "gravity": 0.35
+}
