@@ -1,11 +1,10 @@
-from utils.jsonreader import JsonReader
+from config.config_file import common_config
 
-common = JsonReader('common.json')
-player_physics = JsonReader("entities/player/physics/physics.json")
-player_animations = JsonReader('entities/player/animations/animations.json')
+player = common_config['entities']['player']
+player_physics = player['physics']
+player_animations = player['animations']
 
-
-common_scale_factor = common['scale_factor']
+common_scale_factor = common_config['common']['scale_factor']
 animations_scale_factor = player_animations['scale_factor']
 
 total_scale_factor = common_scale_factor * animations_scale_factor
@@ -19,4 +18,3 @@ FAST_RUN_SPEED = player_physics['fast_run_speed'] * total_scale_factor
 
 def totalize(x):
     return total_scale_factor * x
-

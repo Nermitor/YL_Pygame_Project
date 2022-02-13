@@ -1,9 +1,9 @@
 import pygame as pg
 
-from utils.jsonreader import JsonReader
+from config.config_file import common_config
 
-common = JsonReader('common.json')
-platform = JsonReader("environment/platform/config.json")
+common = common_config['common']
+platform = common_config['environment']['platforms']
 
 scale_factor = common['scale_factor'] * platform['scale_factor']
 
@@ -20,3 +20,6 @@ class Platform(pg.sprite.Sprite):
         tile_x, tile_y = tile_cords
         tile_width, tile_height = tile_size
         return Platform(tile_x * tile_width, tile_y * tile_height, image)
+
+    def update(self, *args, **kwargs):
+        pass

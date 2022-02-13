@@ -2,15 +2,16 @@ from glob import glob
 
 from pyganim import PygAnimation as Anim
 
-from utils.jsonreader import JsonReader
+from config.config_file import common_config
+from entities.player.physics.physics import total_scale_factor
 
-animation_config = JsonReader("entities/player/animations/animations.json")
-common_config = JsonReader('common.json')
+animation_config = common_config['entities']['player']['animations']
+common_config = common_config['common']
+
 asset_folder = "entities/player/animations/assets/"
 exp_asset_folder = "entities/player/animations/exp/"
 default_size = 26, 32
-scale_factor = animation_config['scale_factor'] * common_config['scale_factor']
-new_size = (default_size[0] * scale_factor, default_size[1] * scale_factor)
+new_size = (default_size[0] * total_scale_factor, default_size[1] * total_scale_factor)
 
 
 def make_anims(frames):
@@ -46,7 +47,6 @@ player_wall_slide_anim_right, player_wall_slide_anim_left = make_anims(
 
 player_jump_anim_right, player_jump_anim_left = make_anims(
     [(f"{asset_folder}adventurer-jump-02.png", animation_config['jump_anim_delay'])])
-
 
 anims = {
     1: {

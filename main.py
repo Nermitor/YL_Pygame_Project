@@ -1,45 +1,33 @@
 import pygame as pg
 
-from utils.jsonreader import JsonReader
-from utils.maploader import Map
-from entities.camera.camera import Camera
-
-
+from config.config_file import common_config
+from scenes.scene_aggregator import SceneAggregator
 
 
 def main():
     pg.init()
-    reader = JsonReader("common.json")
-    screen_size = reader["screen_size"]
-    screen = pg.display.set_mode(screen_size)
+    screen = pg.display.set_mode(common_config['common']['screen_size'])
 
-    game_map = Map("maps/tiles/безымянный.tmx")
+    scene_aggregator = SceneAggregator()
+    scene_aggregator.switch_to("game")
 
-    timer = pg.time.Clock()
-
-    camera = Camera(*screen_size)
+    fps = common_config['common']['fps']
+    clock = pg.time.Clock()
 
     running = True
     while running:
-        timer.tick(60)
+        clock.tick(fps)
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
+            else:
+                scene_aggregator.handle_event(event)
 
+        scene_aggregator.update_cur_scene()
+        scene_aggregator.draw_cur_scene(screen)
 
-        screen.fill("black")
-        game_map.update()
-        camera.update(game_map.get_player())
-        for group in game_map.sprites.values():
-            for sprite in group:
-                camera.apply(sprite)
-
-        game_map.draw(screen)
-        game_map.get_player().draw_colliders(screen)  # debug
         pg.display.update()
 
-    pg.quit()
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

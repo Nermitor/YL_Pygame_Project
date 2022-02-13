@@ -1,2 +1,2 @@
-from . import player
 from . import camera
+from . import player
