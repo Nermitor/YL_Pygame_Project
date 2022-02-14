@@ -3,11 +3,9 @@ from abc import ABC, abstractmethod
 
 class MetaScene(ABC):
 
-    @abstractmethod
     def set(self, *args, **kwargs):
         ...
 
-    @abstractmethod
     def unset(self):
         ...
 

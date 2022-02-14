@@ -9,7 +9,7 @@ def main():
     screen = pg.display.set_mode(common_config['common']['screen_size'])
 
     scene_aggregator = SceneAggregator()
-    scene_aggregator.switch_to("game")
+    scene_aggregator.switch_to("menu")
 
     fps = common_config['common']['fps']
     clock = pg.time.Clock()

@@ -43,9 +43,12 @@
       }
     }
   },
-  "ui": {
+  "gui": {
     "font": "standard",
     "font_size": 5,
     "scale_factor": 4
+  },
+  "menu": {
+    "scale_factor": 2
   }
 }

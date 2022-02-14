@@ -5,7 +5,7 @@ from config.config_file import common_config
 pg.font.init()
 
 common = common_config['common']
-ui = common_config['ui']
+ui = common_config['gui']
 
 scale_factor = ui['scale_factor'] * common["scale_factor"]
 

@@ -8,7 +8,6 @@ class UITimer(pg.sprite.Sprite):
         super().__init__()
         self.screen_width = screen_width
         self.y = y * scale_factor
-        self.timer = pg.time.Clock().tick
         self.time = 0
         self.set_time_text()
         self.rect = self.image.get_rect(centerx=screen_width // 2)
@@ -30,12 +29,15 @@ class UITimer(pg.sprite.Sprite):
         self.set_text(self.get_time_s_text(self.time))
 
     def update(self, *args, **kwargs):
-        self.time += self.timer()
-        self.set_time_text()
-        self.rect = self.image.get_rect(centerx=self.screen_width // 2)
-        self.rect.y = self.y
+        if self.run:
+            print(self.time)
+            self.time += self.timer()
+            self.set_time_text()
+            self.rect = self.image.get_rect(centerx=self.screen_width // 2)
+            self.rect.y = self.y
 
     def start(self):
+        self.timer = pg.time.Clock().tick
         self.run = True
 
     def stop(self):

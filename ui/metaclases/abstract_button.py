@@ -10,8 +10,12 @@ class AbstractButton(pg.sprite.Sprite):
         self.rect.y = y
 
     def update(self, event: pg.event.Event):
-        if self.rect.collidepoint(*event.pos):
-            self.call_back_function()
+        if event.type == pg.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(*event.pos):
+                self.call_back_function()
+
+    def handle_event(self, event):
+        self.update(event)
 
 
 class AbstractTextWithImageButton(AbstractButton):

@@ -18,6 +18,7 @@ class GameScene(MetaScene):
         self.player = self.player_group.sprites()[0]
         self.bg = self.game_map.get_bg()
         self.timer = UITimer(common_config['common']['screen_size'][0])
+        self.timer.stop()
 
         self.ui_group.add(self.timer)
         self.camera = Camera(*common_config['common']['screen_size'])
