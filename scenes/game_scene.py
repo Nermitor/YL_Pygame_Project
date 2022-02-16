@@ -1,8 +1,8 @@
-from config.config_file import common_config
 from entities.camera.camera import Camera
 from scenes.metascene import MetaScene
 from ui.game_interface import UITimer
-from userevents import *
+from ui.presets import *
+from config.config_file import common_config
 from utils.maploader import Map
 
 
@@ -18,9 +18,9 @@ class GameScene(MetaScene):
         self.player = self.player_group.sprites()[0]
         self.bg = self.game_map.get_bg()
         self.timer = UITimer(common_config['common']['screen_size'][0])
-        self.timer.stop()
+        self.pause_button = game_pause(50, 30)
 
-        self.ui_group.add(self.timer)
+        self.ui_group.add(self.timer, self.pause_button)
         self.camera = Camera(*common_config['common']['screen_size'])
 
         self.all_groups = [
@@ -40,6 +40,8 @@ class GameScene(MetaScene):
             self.ui_group
         ]
 
+        self.friezed = False
+
     def set(self):
         self.timer.start()
 
@@ -53,8 +55,9 @@ class GameScene(MetaScene):
             group.draw(screen)
 
     def update(self, *args, **kwargs):
-        for group in self.all_groups:
-            group.update(platforms=self.platforms_group, check_points=self.check_points)
+        if not self.friezed:
+            for group in self.all_groups:
+                group.update(platforms=self.platforms_group, check_points=self.check_points)
 
         self.camera.update(self.player)
         for group in self.no_static_groups:
@@ -63,5 +66,15 @@ class GameScene(MetaScene):
 
     def handle_event(self, event):
         if event.type == GAME_EVENT_TYPE:
-            if event.event == "get_finish":
-                pg.event.post(QUIT_EVENT)
+            data = event.data
+            if data['type'] == "get_finish":
+                generate_event(SCENE_AGGREGATOR_EVENT_TYPE, data={
+                    "type": "switch_scene",
+                    "scene": "menu"
+                })
+            elif data['type'] == "button_click":
+                if data['button'] == 'game_pause':
+                    self.friezed ^= 1
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            for widget in self.ui_group:
+                widget.handle_event(event)

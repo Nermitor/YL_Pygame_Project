@@ -1,12 +1,11 @@
-import pygame as pg
 from functools import partial
 
+import pygame as pg
+
 GAME_EVENT_TYPE = pg.USEREVENT
-GET_FINISH_EVENT = pg.event.Event(GAME_EVENT_TYPE, event="get_finish")
-
 MENU_EVENT_TYPE = pg.USEREVENT + 1
-
 SCENE_AGGREGATOR_EVENT_TYPE = pg.USEREVENT + 2
+SOUND_MANAGER_EVENT_TYPE = pg.USEREVENT + 3
 
 QUIT_EVENT = pg.event.Event(pg.QUIT)
 

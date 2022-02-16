@@ -44,11 +44,23 @@
     }
   },
   "gui": {
-    "font": "standard",
-    "font_size": 5,
-    "scale_factor": 4
+    "timer": {
+      "font": "standard",
+      "font_size": 5,
+      "scale_factor": 4
+    },
+    "buttons": {
+      "scale_factor": 0.05
+    }
   },
   "menu": {
-    "scale_factor": 2
+    "buttons": {
+      "big_buttons": {
+        "scale_factor": 0.2
+      },
+      "small_buttons": {
+        "scale_factor": 0.1
+      }
+    }
   }
 }

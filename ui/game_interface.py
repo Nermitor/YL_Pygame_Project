@@ -1,13 +1,13 @@
 import pygame as pg
 
-from ui.config import font, scale_factor
+from ui.config import timer_font, timer_scale_factor
 
 
 class UITimer(pg.sprite.Sprite):
     def __init__(self, screen_width, y=1):
         super().__init__()
         self.screen_width = screen_width
-        self.y = y * scale_factor
+        self.y = y * timer_scale_factor
         self.time = 0
         self.set_time_text()
         self.rect = self.image.get_rect(centerx=screen_width // 2)
@@ -15,7 +15,7 @@ class UITimer(pg.sprite.Sprite):
         self.run = False
 
     def set_text(self, text):
-        self.image = font.render(text, False, "white")
+        self.image = timer_font.render(text, False, "white")
 
     @staticmethod
     def get_time_s_text(time_ms):
@@ -30,11 +30,13 @@ class UITimer(pg.sprite.Sprite):
 
     def update(self, *args, **kwargs):
         if self.run:
-            print(self.time)
             self.time += self.timer()
             self.set_time_text()
             self.rect = self.image.get_rect(centerx=self.screen_width // 2)
             self.rect.y = self.y
+
+    def handle_event(self, *args, **kwargs):
+        pass
 
     def start(self):
         self.timer = pg.time.Clock().tick

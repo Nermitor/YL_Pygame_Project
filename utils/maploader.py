@@ -9,7 +9,6 @@ from environment.platforms.platform import Platform
 class Map:
     def __init__(self, map_file_name):
         self.map = pytmx.load_pygame(map_file_name)
-        print(self.map.layers)
         self.height = self.map.height
         self.width = self.map.width
         self.tile_height = self.map.tileheight

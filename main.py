@@ -2,6 +2,8 @@ import pygame as pg
 
 from config.config_file import common_config
 from scenes.scene_aggregator import SceneAggregator
+from userevents import SOUND_MANAGER_EVENT_TYPE
+from utils.sound_manager import SoundManager
 
 
 def main():
@@ -9,7 +11,7 @@ def main():
     screen = pg.display.set_mode(common_config['common']['screen_size'])
 
     scene_aggregator = SceneAggregator()
-    scene_aggregator.switch_to("menu")
+    sound_manager = SoundManager()
 
     fps = common_config['common']['fps']
     clock = pg.time.Clock()
@@ -20,6 +22,8 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
+            elif event.type == SOUND_MANAGER_EVENT_TYPE:
+                sound_manager.handle_event(event)
             else:
                 scene_aggregator.handle_event(event)
 

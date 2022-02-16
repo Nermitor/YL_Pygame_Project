@@ -3,7 +3,7 @@ import pygame as pg
 from entities.player.animations.animation import anims, new_size
 from entities.player.physics.physics import DEFAULT_DIR, JUMP_POWER, GRAVITY, MOVE_SPEED, \
     FAST_RUN_SPEED, totalize
-from userevents import GET_FINISH_EVENT
+from userevents import GAME_EVENT_TYPE
 
 
 class Player(pg.sprite.Sprite):
@@ -166,7 +166,9 @@ class Player(pg.sprite.Sprite):
     def check_check_points(self, check_points):
         for check_point in check_points:
             if pg.sprite.collide_rect(check_point, self):
-                pg.event.post(GET_FINISH_EVENT)
+                pg.event.post(pg.event.Event(GAME_EVENT_TYPE, data={
+                    "type": "get_finish"
+                }))
 
     def draw_colliders(self, screen):
         pg.draw.rect(screen, "red", self.rect, 2)
