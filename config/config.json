@@ -51,6 +51,18 @@
     },
     "buttons": {
       "scale_factor": 0.05
+    },
+    "pause_menu": {
+      "common": {
+        "scale_factor": 0.4
+      },
+      "text": {
+        "font": "standard",
+        "font_size": 45
+      },
+      "buttons": {
+        "scale_factor": 0.2
+      }
     }
   },
   "menu": {

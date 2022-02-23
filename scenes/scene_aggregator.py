@@ -39,7 +39,7 @@ class SceneAggregator:
                     self.switch_to("game")
                 elif data['button'] == 'menu_exit':
                     generate_event(pg.QUIT)
-            # elif data['type'] == "switch_scene":
-            #     self.switch_to(data['scene'])
+            elif data['type'] == "switch_scene":
+                self.switch_to(data['scene'])
         else:
             self.cur_scene.handle_event(event)
