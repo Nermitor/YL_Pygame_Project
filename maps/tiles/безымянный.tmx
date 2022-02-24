@@ -4,7 +4,7 @@
  <tileset firstgid="1105" source="player.tsx"/>
  <tileset firstgid="1106" source="start.tsx"/>
  <imagelayer id="3" name="bg">
-  <image source="bg.jpg" width="1920" height="1080"/>
+  <image source="bg.jpg"/>
  </imagelayer>
  <layer id="5" name="player" width="120" height="68">
   <data encoding="csv">

@@ -53,3 +53,7 @@ game_reset = ButtonFabric(pg.image.load(image_folder + "Return Square Button.png
                               "type": "switch_scene",
                               "scene": "game"
                           }))
+game_next_level = ButtonFabric(pg.image.load(image_folder + "Next Square Button.png"),
+                               generate_event_function(SCENE_AGGREGATOR_EVENT_TYPE, data={
+                                   "type": "next_game_level"
+                               }))

@@ -2,9 +2,10 @@ from config.config_file import common_config
 from entities.camera.camera import Camera
 from scenes.metascene import MetaScene
 from ui.game_interface import UITimer
-from ui.pause_menu import PauseMenu
 from ui.presets import *
+from ui.windows.pause_menu import PauseMenu
 from utils.maploader import Map
+from ui.windows.finish_menu import FinishMenu
 
 
 class GameScene(MetaScene):
@@ -27,6 +28,7 @@ class GameScene(MetaScene):
         self.ui_group.add(self.timer, self.pause_button)
         self.camera = Camera(*common_config['common']['screen_size'])
         self.pause_menu = PauseMenu(common_config['common']['screen_size'][0] // 2, 300, self)
+        self.finish_menu = FinishMenu(common_config['common']['screen_size'][0] // 2, 300, self)
 
         self.all_groups = [
             self.platforms_group,
@@ -46,6 +48,7 @@ class GameScene(MetaScene):
         ]
 
         self.friezed = False
+        self.finished = False
 
     def set(self):
         self.init()
@@ -63,9 +66,11 @@ class GameScene(MetaScene):
             group.draw(screen)
         if self.friezed:
             self.pause_menu.draw(screen)
+        elif self.finished:
+            self.finish_menu.draw(screen)
 
     def update(self, *args, **kwargs):
-        if not self.friezed:
+        if not self.friezed and not self.finished:
             for group in self.all_groups:
                 group.update(platforms=self.platforms_group, check_points=self.check_points)
 
@@ -77,14 +82,13 @@ class GameScene(MetaScene):
     def handle_event(self, event):
         if self.friezed:
             self.pause_menu.handle_event(event)
+        elif self.finished:
+            self.finish_menu.handle_event(event)
         else:
             if event.type == GAME_EVENT_TYPE:
                 data = event.data
                 if data['type'] == "get_finish":
-                    generate_event(SCENE_AGGREGATOR_EVENT_TYPE, data={
-                        "type": "switch_scene",
-                        "scene": "menu"
-                    })
+                    self.finished = True
                 elif data['type'] == "button_click":
                     if data['button'] == 'game_pause':
                         self.frieze_scene(self.friezed ^ 1)
