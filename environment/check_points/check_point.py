@@ -13,7 +13,7 @@ class AbstractCheckPoint(pg.sprite.Sprite):
         super().__init__()
         self.image = pg.transform.scale(image, (image.get_width() * scale_factor, image.get_height() * scale_factor))
         self.rect = self.image.get_rect()
-        self.rect.x, self.rect.y = x * scale_factor, y * scale_factor
+        self.rect.x, self.rect.y = x * scale_factor, (y + 5) * scale_factor
 
     @staticmethod
     def from_tile_cords(tile_cords, tile_size, image):

@@ -9,11 +9,11 @@ from ui.windows.finish_menu import FinishMenu
 
 
 class GameScene(MetaScene):
-    def __init__(self, map_name: str):
-        self.map_name = map_name
+    def __init__(self, map_num):
+        self.map_num = map_num
 
     def init(self):
-        self.game_map = Map(self.map_name)
+        self.game_map = Map(f"maps/tiles/{self.map_num}.tmx")
         self.platforms_group = self.game_map.sprites['platforms']
         self.player_group = pg.sprite.Group(self.game_map.get_player())
         self.ui_group = pg.sprite.Group()

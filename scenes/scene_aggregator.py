@@ -5,7 +5,9 @@ from userevents import *
 
 class SceneAggregator:
     def __init__(self):
-        self.game_scene = GameScene("maps/tiles/безымянный.tmx")
+        self.cur_game_level = 1
+        self.game_scene = GameScene(self.cur_game_level)
+
         self.menu_scene = MainMenu()
 
         self.cur_scene = None
@@ -41,5 +43,14 @@ class SceneAggregator:
                     generate_event(pg.QUIT)
             elif data['type'] == "switch_scene":
                 self.switch_to(data['scene'])
+            elif data['type'] == 'next_game_level':
+                try:
+                    self.game_scene.__init__(self.cur_game_level + 1)
+                    self.game_scene.init()
+                except FileNotFoundError:
+                    pass
+                else:
+                    self.cur_game_level += 1
+
         else:
             self.cur_scene.handle_event(event)
