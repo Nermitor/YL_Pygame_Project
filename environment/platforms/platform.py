@@ -1,9 +1,10 @@
 import pygame as pg
 
-from config.config_file import common_config
+from config.config import config
+from utils.image import scalex
 
-common = common_config['common']
-platform = common_config['environment']['platforms']
+common = config['common']
+platform = config['environment']['platforms']
 
 scale_factor = common['scale_factor'] * platform['scale_factor']
 
@@ -11,7 +12,7 @@ scale_factor = common['scale_factor'] * platform['scale_factor']
 class Platform(pg.sprite.Sprite):
     def __init__(self, x, y, image: pg.Surface):
         super().__init__()
-        self.image = pg.transform.scale(image, (image.get_width() * scale_factor, image.get_height() * scale_factor))
+        self.image = scalex(image, scale_factor)
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = x * scale_factor, y * scale_factor
 

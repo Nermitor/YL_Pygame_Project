@@ -1,6 +1,6 @@
 import pygame as pg
 
-from config.config_file import common_config
+from config.config import config
 from scenes.scene_aggregator import SceneAggregator
 from userevents import SOUND_MANAGER_EVENT_TYPE
 from utils.sound_manager import SoundManager
@@ -8,12 +8,12 @@ from utils.sound_manager import SoundManager
 
 def main():
     pg.init()
-    screen = pg.display.set_mode(common_config['common']['screen_size'])
+    screen = pg.display.set_mode(config['common']['screen_size'])
 
     scene_aggregator = SceneAggregator()
     sound_manager = SoundManager()
 
-    fps = common_config['common']['fps']
+    fps = config['common']['fps']
     clock = pg.time.Clock()
 
     running = True

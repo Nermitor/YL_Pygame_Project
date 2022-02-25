@@ -13,16 +13,20 @@ class FinishMenu(AbstractMenu):
 
     def init_widgets(self):
         buttons_y = 350 * common_pause_menu_scale_factor
-        self.next_level_btn = game_next_level(self.image.get_width() // 2, buttons_y,
-                                              init_scaling=buttons_pause_menu_scale_factor,
-                                              addictions=(True, False))
+
         self.home_btn = game_home(self.image.get_width() // 2 + 100 * common_pause_menu_scale_factor, buttons_y,
                                   init_scaling=buttons_pause_menu_scale_factor,
                                   addictions=(True, False))
         self.reset_btn = game_reset(self.image.get_width() // 2 - 100 * common_pause_menu_scale_factor, buttons_y,
                                     init_scaling=buttons_pause_menu_scale_factor,
                                     addictions=(True, False))
-        self.widgets = pg.sprite.Group(self.next_level_btn, self.home_btn, self.reset_btn)
+        self.widgets = pg.sprite.Group(self.home_btn, self.reset_btn)
+
+        if self.parent.map_num < self.parent.levels_data['max_level']:
+            self.next_level_btn = game_next_level(self.image.get_width() // 2, buttons_y,
+                                                  init_scaling=buttons_pause_menu_scale_factor,
+                                                  addictions=(True, False))
+            self.widgets.add(self.next_level_btn)
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:

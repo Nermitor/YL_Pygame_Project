@@ -1,10 +1,10 @@
-from config.config_file import common_config
+from config.config import config
 
-player = common_config['entities']['player']
+player = config['entities']['player']
 player_physics = player['physics']
 player_animations = player['animations']
 
-common_scale_factor = common_config['common']['scale_factor']
+common_scale_factor = config['common']['scale_factor']
 animations_scale_factor = player_animations['scale_factor']
 
 total_scale_factor = common_scale_factor * animations_scale_factor

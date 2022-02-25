@@ -2,11 +2,11 @@ from glob import glob
 
 from pyganim import PygAnimation as Anim
 
-from config.config_file import common_config
+from config.config import config
 from entities.player.physics.physics import total_scale_factor
 
-animation_config = common_config['entities']['player']['animations']
-common_config = common_config['common']
+animation_config = config['entities']['player']['animations']
+common_config = config['common']
 
 asset_folder = "entities/player/animations/assets/"
 exp_asset_folder = "entities/player/animations/exp/"

@@ -1,11 +1,15 @@
-from config.config_file import common_config
+import pygame as pg
+
+from config.config import config
 from entities.camera.camera import Camera
 from scenes.metascene import MetaScene
 from ui.game_interface import UITimer
-from ui.presets import *
-from ui.windows.pause_menu import PauseMenu
-from utils.maploader import Map
+from ui.presets import game_pause
 from ui.windows.finish_menu import FinishMenu
+from ui.windows.pause_menu import PauseMenu
+from userevents import GAME_EVENT_TYPE
+from utils.jsonio import JsonIO
+from utils.maploader import Map
 
 
 class GameScene(MetaScene):
@@ -21,14 +25,13 @@ class GameScene(MetaScene):
 
         self.player = self.player_group.sprites()[0]
         self.bg = self.game_map.get_bg()
-        self.timer = UITimer(common_config['common']['screen_size'][0])
+        self.timer = UITimer(config['common']['screen_size'][0])
         self.timer.start()
         self.pause_button = game_pause(50, 30)
 
         self.ui_group.add(self.timer, self.pause_button)
-        self.camera = Camera(*common_config['common']['screen_size'])
-        self.pause_menu = PauseMenu(common_config['common']['screen_size'][0] // 2, 300, self)
-        self.finish_menu = FinishMenu(common_config['common']['screen_size'][0] // 2, 300, self)
+        self.camera = Camera(*config['common']['screen_size'])
+        self.pause_menu = PauseMenu(config['common']['screen_size'][0] // 2, 300, self)
 
         self.all_groups = [
             self.platforms_group,
@@ -49,6 +52,10 @@ class GameScene(MetaScene):
 
         self.friezed = False
         self.finished = False
+
+        self.levels_data = JsonIO("config/temp.json")
+        self.levels_data['last_level'] = self.map_num
+        self.finish_menu = FinishMenu(config['common']['screen_size'][0] // 2, 300, self)
 
     def set(self):
         self.init()
@@ -89,6 +96,7 @@ class GameScene(MetaScene):
                 data = event.data
                 if data['type'] == "get_finish":
                     self.finished = True
+                    self.levels_data["unlocked_levels"] = list({*self.levels_data['unlocked_levels'], self.map_num + 1})
                 elif data['type'] == "button_click":
                     if data['button'] == 'game_pause':
                         self.frieze_scene(self.friezed ^ 1)

@@ -1,10 +1,10 @@
 import pygame as pg
 
-from config.config_file import common_config
+from config.config import config
 from scenes.metascene import MetaScene
-from ui.presets import menu_start, menu_exit, menu_music
+from ui.presets import menu_start, menu_exit, menu_music, menu_levels
 
-screen_width, screen_height = common_config['common']['screen_size']
+screen_width, screen_height = config['common']['screen_size']
 
 
 class MainMenu(MetaScene):
@@ -13,18 +13,14 @@ class MainMenu(MetaScene):
         self.start_btn = menu_start(screen_width // 2, 300)
         self.ext_btn = menu_exit(screen_width // 2, 700)
         self.music_btn = menu_music(1800, 900)
+        self.levels_btn = menu_levels(1800, 700)
 
         self.all_widgets = pg.sprite.Group(
             self.start_btn,
             self.ext_btn,
-            self.music_btn
+            self.music_btn,
+            self.levels_btn
         )
-
-    def unset(self):
-        pass
-
-    def set(self):
-        pass
 
     def draw(self, screen):
         screen.blit(self.bg, (0, 0))

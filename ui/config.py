@@ -1,15 +1,15 @@
 import pygame as pg
 
-from config.config_file import common_config
+from config.config import config
 
 pg.font.init()
 
-common = common_config['common']
+common = config['common']
 
-menu = common_config['menu']
+menu = config['menu']
 menu_buttons = menu['buttons']
 
-ui = common_config['gui']
+ui = config['gui']
 game_buttons = ui['buttons']
 timer = ui['timer']
 pause_menu = ui["pause_menu"]
@@ -25,4 +25,4 @@ common_pause_menu_scale_factor = pause_menu['common']['scale_factor'] * common_s
 buttons_pause_menu_scale_factor = pause_menu['buttons']['scale_factor'] * common_pause_menu_scale_factor
 pause_menu_font = pg.font.Font(f"{font_dir}{pause_menu['text']['font']}.ttf", pause_menu['text']['font_size'])
 
-del common, menu, menu_buttons, ui, game_buttons, timer, common_config, pg
+del common, menu, menu_buttons, ui, game_buttons, timer, config, pg

@@ -59,6 +59,7 @@ class Player(pg.sprite.Sprite):
                     self.last_update_is_jump = True
                     self.on_wall = False
                     self.jumps = self.default_jumps_count - 1
+
             else:
                 if self.jumps and not self.last_update_is_jump:
                     self.yvel = -JUMP_POWER

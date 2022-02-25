@@ -1,12 +1,17 @@
 from scenes.game_scene import GameScene
+from scenes.levels import Levels
 from scenes.menu import MainMenu
 from userevents import *
+from utils.jsonio import JsonIO
 
 
 class SceneAggregator:
     def __init__(self):
         self.cur_game_level = 1
         self.game_scene = GameScene(self.cur_game_level)
+        self.levels_scene = Levels()
+
+        self.levels_data = JsonIO("config/temp.json")
 
         self.menu_scene = MainMenu()
 
@@ -14,7 +19,8 @@ class SceneAggregator:
 
         self.scenes = {
             "menu": self.menu_scene,
-            "game": self.game_scene
+            "game": self.game_scene,
+            "levels": self.levels_scene
         }
 
         self.set("menu")
@@ -36,21 +42,16 @@ class SceneAggregator:
     def handle_event(self, event):
         if event.type == SCENE_AGGREGATOR_EVENT_TYPE:
             data = event.data
-            if data['type'] == "button_click":
-                if data['button'] == "menu_start":
-                    self.switch_to("game")
-                elif data['button'] == 'menu_exit':
-                    generate_event(pg.QUIT)
-            elif data['type'] == "switch_scene":
+            if data['type'] == "switch_scene":
                 self.switch_to(data['scene'])
             elif data['type'] == 'next_game_level':
-                try:
-                    self.game_scene.__init__(self.cur_game_level + 1)
-                    self.game_scene.init()
-                except FileNotFoundError:
-                    pass
-                else:
-                    self.cur_game_level += 1
+                self.cur_game_level += 1
+                self.game_scene.__init__(self.cur_game_level)
+                self.switch_to("game")
+            elif data['type'] == "game_scene_from_num":
+                self.game_scene.__init__(level := data['level_num'])
+                self.cur_game_level = level
+                self.switch_to("game")
 
         else:
             self.cur_scene.handle_event(event)
