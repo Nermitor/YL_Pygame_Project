@@ -1,44 +1,37 @@
 import pygame as pg
 
-from utils.jsonreader import JsonReader
-from utils.maploader import Map
-from entities.camera.camera import Camera
-
-
+from config.config import config
+from scenes.scene_aggregator import SceneAggregator
+from userevents import SOUND_MANAGER_EVENT_TYPE
+from utils.sound_manager import SoundManager
 
 
 def main():
     pg.init()
-    reader = JsonReader("common.json")
-    screen_size = reader["screen_size"]
-    screen = pg.display.set_mode(screen_size)
+    screen = pg.display.set_mode(config['common']['screen_size'])
 
-    game_map = Map("maps/tiles/безымянный.tmx")
+    scene_aggregator = SceneAggregator()
+    sound_manager = SoundManager()
 
-    timer = pg.time.Clock()
-
-    camera = Camera(*screen_size)
+    fps = config['common']['fps']
+    clock = pg.time.Clock()
 
     running = True
     while running:
-        timer.tick(60)
+        clock.tick(fps)
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
+            elif event.type == SOUND_MANAGER_EVENT_TYPE:
+                sound_manager.handle_event(event)
+            else:
+                scene_aggregator.handle_event(event)
 
+        scene_aggregator.update_cur_scene()
+        scene_aggregator.draw_cur_scene(screen)
 
-        screen.fill("black")
-        game_map.update()
-        camera.update(game_map.get_player())
-        for group in game_map.sprites.values():
-            for sprite in group:
-                camera.apply(sprite)
-
-        game_map.draw(screen)
         pg.display.update()
 
-    pg.quit()
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -1,0 +1,78 @@
+{
+  "common": {
+    "screen_size": [
+      1920,
+      1080
+    ],
+    "scale_factor": 5,
+    "fps": 60
+  },
+  "environment": {
+    "common": {
+      "scale_factor": 1
+    },
+    "platforms": {
+      "scale_factor": 1
+    },
+    "check_points": {
+      "scale_factor": 4
+    }
+  },
+  "entities": {
+    "common": {
+      "gravity": 0.35
+    },
+    "player": {
+      "physics": {
+        "default_dir": 1,
+        "move_speed": 2,
+        "fast_run_speed": 3,
+        "jump_power": 5,
+        "gravity": 0.35
+      },
+      "animations": {
+        "run_anim_delay": 100,
+        "idle_anim_delay": 200,
+        "jump_anim_delay": 100,
+        "fall_anim_delay": 100,
+        "die_anim_delay": 200,
+        "items_anim_delay": 150,
+        "wall_slide_anim_delay": 100,
+        "fast_run_anim_delay": 60,
+        "scale_factor": 1
+      }
+    }
+  },
+  "gui": {
+    "timer": {
+      "font": "standard",
+      "font_size": 5,
+      "scale_factor": 4
+    },
+    "buttons": {
+      "scale_factor": 0.05
+    },
+    "pause_menu": {
+      "common": {
+        "scale_factor": 0.4
+      },
+      "text": {
+        "font": "standard",
+        "font_size": 45
+      },
+      "buttons": {
+        "scale_factor": 0.2
+      }
+    }
+  },
+  "menu": {
+    "buttons": {
+      "big_buttons": {
+        "scale_factor": 0.2
+      },
+      "small_buttons": {
+        "scale_factor": 0.1
+      }
+    }
+  }
+}

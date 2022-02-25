@@ -1,1 +1,2 @@
-from . import platform
+from . import check_points
+from . import platforms
