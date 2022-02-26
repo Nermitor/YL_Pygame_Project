@@ -42,17 +42,14 @@ class GameScene(MetaScene):
             self.ui_group,
             self.check_points
         ]
-
         self.no_static_groups = [
             self.platforms_group,
             self.player_group,
             self.check_points
         ]
-
         self.static_groups = [
             self.ui_group
         ]
-
         self.friezed = False
         self.finished = False
 
@@ -63,7 +60,6 @@ class GameScene(MetaScene):
         self.cur_level_best_time = self.levels_data['best_time'].get(str(self.map_num))
         if self.cur_level_best_time is not None:
             ms_time = self.cur_level_best_time
-            print(ms_time)
             if ms_time >= 1000:
                 text = f"Best time| {self.timer.get_time_s_text(ms_time)}"
             else:
