@@ -1,3 +1,5 @@
+"""Анимации"""
+
 from glob import glob
 
 from pyganim import PygAnimation as Anim

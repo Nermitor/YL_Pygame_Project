@@ -1,3 +1,5 @@
+"""Заранее определённые виджеты"""
+
 from ui.button import OnlyImageButton
 from ui.config import *
 from userevents import *

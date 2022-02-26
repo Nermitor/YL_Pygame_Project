@@ -1,3 +1,5 @@
+"""Файл конфига для интерфейса"""
+
 import pygame as pg
 
 from config.config import config

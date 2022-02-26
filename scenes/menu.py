@@ -1,3 +1,5 @@
+"""Сцена с главным меню"""
+
 import pygame as pg
 
 from config.config import config

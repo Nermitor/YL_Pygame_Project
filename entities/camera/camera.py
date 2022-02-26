@@ -1,4 +1,5 @@
 class Camera:
+    """Камера, следит за игроком"""
     # зададим начальный сдвиг камеры
     def __init__(self, width, height):
         self.width = width

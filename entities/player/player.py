@@ -7,6 +7,7 @@ from userevents import GAME_EVENT_TYPE
 
 
 class Player(pg.sprite.Sprite):
+    """Класс спрайта игрока"""
     def __init__(self, x, y):
         super().__init__()
         self.image = pg.Surface(new_size)

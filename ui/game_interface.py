@@ -1,3 +1,5 @@
+"""Игровой таймер"""
+
 import pygame as pg
 
 from ui.config import timer_font, timer_scale_factor
@@ -25,6 +27,9 @@ class UITimer(pg.sprite.Sprite):
             return f"{hrs}:{mins}:{secs}."
         return f"{mins}:{secs}"
 
+    def get_time(self):
+        return self.time
+
     def set_time_text(self):
         self.set_text(self.get_time_s_text(self.time))
 
@@ -44,9 +49,6 @@ class UITimer(pg.sprite.Sprite):
 
     def stop(self):
         self.run = False
-
-    def stopstart(self):
-        self.run = not self.run
 
     def reset(self):
         self.time = 0

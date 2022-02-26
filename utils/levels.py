@@ -1,3 +1,5 @@
+"""Возвращает список доступных уровней"""
+
 import os.path as path
 from itertools import count
 

@@ -1,3 +1,5 @@
+"""Пользовательские ивенты"""
+
 from functools import partial
 
 import pygame as pg

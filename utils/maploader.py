@@ -1,3 +1,5 @@
+"""Загрузчик уровней"""
+
 import pygame as pg
 import pytmx
 

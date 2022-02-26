@@ -1,3 +1,5 @@
+"""Класс кнопки с изображением"""
+
 from utils.image import scalex
 from .metaclases.abstract_button import AbstractButton
 

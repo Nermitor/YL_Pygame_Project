@@ -1,3 +1,5 @@
+"""Менеджер сцен"""
+
 from scenes.game_scene import GameScene
 from scenes.levels import Levels
 from scenes.menu import MainMenu

@@ -1,3 +1,5 @@
+"""Содержит абстрактный класс финиша"""
+
 import pygame as pg
 
 from config.config import config

@@ -1,3 +1,5 @@
+"""Сцена с выбором уровней"""
+
 import pygame as pg
 
 from config.config import config

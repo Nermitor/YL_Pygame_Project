@@ -1,3 +1,5 @@
+"""Физические константы"""
+
 from config.config import config
 
 player = config['entities']['player']

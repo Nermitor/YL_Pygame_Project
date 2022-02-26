@@ -1,3 +1,5 @@
+"""Спрайт платформы"""
+
 import pygame as pg
 
 from config.config import config

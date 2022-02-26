@@ -1,3 +1,5 @@
+"""Меню паузы"""
+
 import pygame as pg
 
 from ui.button import OnlyImageButton

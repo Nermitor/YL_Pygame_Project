@@ -1,8 +1,11 @@
+"""Игровая сцена"""
+
 import pygame as pg
 
 from config.config import config
 from entities.camera.camera import Camera
 from scenes.metascene import MetaScene
+from ui.config import timer_font
 from ui.game_interface import UITimer
 from ui.presets import game_pause
 from ui.windows.finish_menu import FinishMenu
@@ -57,6 +60,17 @@ class GameScene(MetaScene):
         self.levels_data['last_level'] = self.map_num
         self.finish_menu = FinishMenu(config['common']['screen_size'][0] // 2, 300, self)
 
+        self.cur_level_best_time = self.levels_data['best_time'].get(str(self.map_num))
+        if self.cur_level_best_time is not None:
+            ms_time = self.cur_level_best_time
+            print(ms_time)
+            if ms_time >= 1000:
+                text = f"Best time| {self.timer.get_time_s_text(ms_time)}"
+            else:
+                text = f"Best time| 0.{ms_time}s"
+            self.cur_level_surface = timer_font.render(
+                text, False, pg.Color("black"))
+
     def set(self):
         self.init()
 
@@ -75,6 +89,9 @@ class GameScene(MetaScene):
             self.pause_menu.draw(screen)
         elif self.finished:
             self.finish_menu.draw(screen)
+
+        if self.cur_level_best_time is not None:
+            screen.blit(self.cur_level_surface, (1350, 900))
 
     def update(self, *args, **kwargs):
         if not self.friezed and not self.finished:
@@ -97,6 +114,15 @@ class GameScene(MetaScene):
                 if data['type'] == "get_finish":
                     self.finished = True
                     self.levels_data["unlocked_levels"] = list({*self.levels_data['unlocked_levels'], self.map_num + 1})
+                    d = self.levels_data.data
+                    cur_level_time = self.levels_data['best_time'].get(str(self.map_num))
+                    if cur_level_time is None:
+                        d['best_time'][str(self.map_num)] = self.timer.get_time()
+                    else:
+                        d['best_time'][str(self.map_num)] = min(self.timer.get_time(), cur_level_time)
+
+                    self.levels_data.save(d)
+
                 elif data['type'] == "button_click":
                     if data['button'] == 'game_pause':
                         self.frieze_scene(self.friezed ^ 1)

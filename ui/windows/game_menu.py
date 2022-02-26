@@ -1,3 +1,5 @@
+"""Класс абстрактного игрового меню"""
+
 import pygame as pg
 
 from scenes.metascene import MetaScene

@@ -1,3 +1,5 @@
+"""Меню окончания уровня"""
+
 import pygame as pg
 
 from ui.button import OnlyImageButton

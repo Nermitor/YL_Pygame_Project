@@ -1,3 +1,5 @@
+"""Менеджер звука"""
+
 import pygame as pg
 
 

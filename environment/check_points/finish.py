@@ -1,3 +1,5 @@
+"""Спрайт финиша"""
+
 from environment.check_points.check_point import AbstractCheckPoint
 
 

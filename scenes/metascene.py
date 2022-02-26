@@ -1,3 +1,5 @@
+"""Абстрактный класс сцены"""
+
 from abc import ABC, abstractmethod
 
 

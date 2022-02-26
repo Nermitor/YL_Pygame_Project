@@ -1,3 +1,5 @@
+"""Позволяет читать и изменять json-файл"""
+
 import json
 
 
@@ -14,3 +16,7 @@ class JsonIO:
         self.data[key] = value
         with open(self.file_name, 'w') as file:
             json.dump(self.data, file)
+
+    def save(self, d):
+        with open(self.file_name, 'w') as file:
+            json.dump(d, file)
