@@ -9,6 +9,7 @@ from userevents import GAME_EVENT_TYPE
 class Player(pg.sprite.Sprite):
     """Класс спрайта игрока"""
     def __init__(self, x, y):
+        """Инициализация спрайта"""
         super().__init__()
         self.image = pg.Surface(new_size)
         self.image.convert_alpha()
@@ -44,6 +45,7 @@ class Player(pg.sprite.Sprite):
     # update()
 
     def update(self, *args, **kwargs):
+        """Обновление спрайта"""
         platforms = kwargs.get("platforms")
         check_points = kwargs.get("check_points")
         self.check_check_points(check_points)
@@ -143,6 +145,7 @@ class Player(pg.sprite.Sprite):
             self.hit_box.center = self.rect.center
 
     def collide(self, xvel, yvel, platforms):
+        """Проверяет на столкновение с платформами"""
         for p in platforms:
             if pg.sprite.collide_rect(self, p):  # если есть пересечение платформы с игроком
                 if xvel > 0:  # если движется вправо
@@ -166,24 +169,15 @@ class Player(pg.sprite.Sprite):
                     self.yvel = 0  # и энергия прыжка пропадает
 
     def check_check_points(self, check_points):
+        """Проверяет на столкновение с финишем"""
         for check_point in check_points:
             if pg.sprite.collide_rect(check_point, self):
                 pg.event.post(pg.event.Event(GAME_EVENT_TYPE, data={
                     "type": "get_finish"
                 }))
 
-    def draw_colliders(self, screen):
-        pg.draw.rect(screen, "red", self.rect, 2)
-        # pg.draw.rect(screen, "black", (self.rect.x, self.rect.y, self.image.get_width(), self.image.get_height()), 2)
-        pg.draw.rect(screen, "dark blue", self.hit_box, 2)
-        p1, p2 = self.get_wall_points()
-        # p3, p4 = self.ground_points()
-        pg.draw.circle(screen, "red", p1, totalize(1))
-        pg.draw.circle(screen, "red", p2, totalize(1))
-        # pg.draw.circle(screen, "red", p3, totalize(1))
-        # pg.draw.circle(screen, "red", p4, totalize(1))
-
     def wall_check(self, platforms):
+        """Проверяет на соприкосновение со сценами"""
         if self.on_wall:
             self.on_wall = False
             p1, p2 = self.get_wall_points()
@@ -197,13 +191,10 @@ class Player(pg.sprite.Sprite):
         return self.on_wall
 
     def get_wall_points(self):
+        """Получает точки проверки для стен"""
         if self.dir == -1:
             return ((self.rect.left - self.wall_check_point_large_x, self.rect.y + self.wall_check_point_large_y),
                     (self.rect.left - self.wall_check_point_large_x, self.rect.bottom - self.wall_check_point_large_y))
         return ((self.rect.right + self.wall_check_point_large_x, self.rect.y + self.wall_check_point_large_y),
                 (self.rect.right + self.wall_check_point_large_x, self.rect.bottom - self.wall_check_point_large_y))
 
-    def ground_points(self):
-        return (
-            (self.rect.x + self.ground_check_point_large_x, self.rect.bottom + self.ground_check_point_large_y),
-            (self.rect.right - self.ground_check_point_large_x, self.rect.bottom + self.ground_check_point_large_y))

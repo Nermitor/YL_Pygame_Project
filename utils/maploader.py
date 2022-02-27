@@ -9,6 +9,7 @@ from environment.platforms.platform import Platform
 
 
 class Map:
+    """Загружает карту из файла"""
     def __init__(self, map_file_name):
         self.map = pytmx.load_pygame(map_file_name)
         self.height = self.map.height
@@ -25,6 +26,7 @@ class Map:
         self.init_sprites()
 
     def init_sprites(self):
+        """Инициализация всех спрйтов"""
         a = self.map.layernames["platforms"]
 
         for tile_x in range(self.width):
@@ -47,19 +49,14 @@ class Map:
                                                       finish_image))
 
     def get_sprite_groups(self):
+        """Получение групп спрайтов"""
         return self.sprites.values()
 
     def get_player(self):
+        """Получение спрайтов игрока"""
         return self.sprites['player_group'].sprites()[0]
 
-    def update(self):
-        self.sprites['platforms'].update()
-        self.sprites['player_group'].update(self.sprites['platforms'])
-
     def get_bg(self):
+        """Получение изображения заднего фона"""
         return self.bg
 
-    def draw(self, screen):
-        screen.blit(self.bg, (0, 0))
-        for sprite_group in self.get_sprite_groups():
-            sprite_group.draw(screen)

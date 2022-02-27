@@ -17,6 +17,7 @@ new_size = (default_size[0] * total_scale_factor, default_size[1] * total_scale_
 
 
 def make_anims(frames):
+    """Создаёт анимацию из фреймов в левом и правых вариантах"""
     k = Anim(frames), Anim(frames)
     for i in k:
         i.scale(new_size)
@@ -58,7 +59,7 @@ anims = {
         "fall": player_fall_anim_right,
         'wall_slide': player_wall_slide_anim_right,
         'fast_run': player_fast_run_anim_right
-    },
+    },  # Словарь для правых анимация
     -1: {
         "idle": player_idle_anim_left,
         "run": player_run_anim_left,
@@ -66,5 +67,5 @@ anims = {
         "fall": player_fall_anim_left,
         "wall_slide": player_wall_slide_anim_left,
         'fast_run': player_fast_run_anim_left
-    }
+    } # Словарь для левых анимаций
 }

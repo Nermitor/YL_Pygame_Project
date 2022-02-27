@@ -9,11 +9,13 @@ from ui.windows.game_menu import AbstractMenu
 
 
 class FinishMenu(AbstractMenu):
+    """Меню финиша"""
     def __init__(self, *args):
         self.text = "Уровень пройден"
         super().__init__(*args)
 
     def init_widgets(self):
+        """Инициализация виджетов"""
         buttons_y = 350 * common_pause_menu_scale_factor
 
         self.home_btn = game_home(self.image.get_width() // 2 + 100 * common_pause_menu_scale_factor, buttons_y,
@@ -31,6 +33,7 @@ class FinishMenu(AbstractMenu):
             self.widgets.add(self.next_level_btn)
 
     def handle_event(self, event):
+        """Обработка событий"""
         if event.type == pg.MOUSEBUTTONDOWN:
             for widget in self.widgets:
                 if isinstance(widget, OnlyImageButton):

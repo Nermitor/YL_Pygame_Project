@@ -7,6 +7,7 @@ from utils.jsonio import JsonIO
 
 
 def get_levels(get_path=False):
+    """Возвращает список уровней"""
     levels = []
     for level_num in count(1):
         if pth := path.exists(f"maps/tiles/{level_num}.tmx"):

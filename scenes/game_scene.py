@@ -68,9 +68,11 @@ class GameScene(MetaScene):
                 text, False, pg.Color("black"))
 
     def set(self):
+        """Установка основных параметров для сцены"""
         self.init()
 
     def frieze_scene(self, value):
+        """Заморозка сцены"""
         if value:
             self.timer.stop()
         else:
@@ -78,6 +80,7 @@ class GameScene(MetaScene):
         self.friezed = value
 
     def draw(self, screen):
+        """Отрисовка сцены"""
         screen.blit(self.bg, (0, 0))
         for group in self.all_groups:
             group.draw(screen)
@@ -90,6 +93,7 @@ class GameScene(MetaScene):
             screen.blit(self.cur_level_surface, (1350, 900))
 
     def update(self, *args, **kwargs):
+        """Обновление сцены"""
         if not self.friezed and not self.finished:
             for group in self.all_groups:
                 group.update(platforms=self.platforms_group, check_points=self.check_points)
@@ -100,6 +104,7 @@ class GameScene(MetaScene):
                     self.camera.apply(sprite)
 
     def handle_event(self, event):
+        """Обработка ивента"""
         if self.friezed:
             self.pause_menu.handle_event(event)
         elif self.finished:

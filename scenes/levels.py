@@ -13,6 +13,7 @@ font = pg.font.Font("ui/resources/fonts/standard.ttf", 80)
 
 
 class Levels(MetaScene):
+    """Окно с выбором уровней"""
     def __init__(self):
         self.bg = pg.image.load("scenes/resources/menu_bg.jpg").convert()
         self.back_btn = menu_back(120, 900)
@@ -21,6 +22,7 @@ class Levels(MetaScene):
         )
 
     def draw(self, screen):
+        """Отрисовка сцены"""
         screen.blit(self.bg, (0, 0))
         self.all_widgets.draw(screen)
 
@@ -28,10 +30,12 @@ class Levels(MetaScene):
         self.generate_levels_buttons()
 
     def handle_event(self, event):
+        """Обработка событий"""
         for widget in self.all_widgets.sprites():
             widget.handle_event(event)
 
     def generate_levels_buttons(self):
+        """Инициализация кнопок"""
         data = JsonIO("config/temp.json")
         passed_levels = data['unlocked_levels']
         scale_factor = config['common']['scale_factor']
@@ -60,5 +64,3 @@ class Levels(MetaScene):
             self.all_widgets.add(button)
             cur_x += step_x + spacing_x
 
-    def update(self, *args, **kwargs):
-        pass

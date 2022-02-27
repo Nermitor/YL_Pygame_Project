@@ -8,6 +8,7 @@ image_folder = "ui/resources/buttons/"
 
 
 class ButtonFabric:
+    """Создаёт шаблоны для кнопок, в которые потом надо передать лишь"""
     def __new__(cls, image, call_back_function, scaling=None, **kwargs):
         class Button(OnlyImageButton):
             def __init__(self, x, y, init_scaling=None, **init_kwargs):
@@ -18,6 +19,7 @@ class ButtonFabric:
 
 
 class DifficultCallBackButtonsFabric:
+    """Аналогично ButtonFabric, но создаёт шаблоны для кнопок выбора уровня"""
     def __new__(cls, image, scaling=None, **kwargs):
         class Button(OnlyImageButton):
             def __init__(self, x, y, call_back_function, init_scaling=None, **init_kwargs):

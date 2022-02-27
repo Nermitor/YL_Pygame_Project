@@ -8,6 +8,7 @@ from utils.image import scalex
 
 
 class AbstractMenu(MetaScene):
+    """Абстрактный класс для игровых меню"""
     def __init__(self, x, y, parent):
         self.cords = [x, y]
         self.parent = parent
@@ -19,15 +20,18 @@ class AbstractMenu(MetaScene):
         self.sync_widgets_cords()
 
     def draw(self, screen):
+        """Отрисовка меню"""
         screen.blit(self.image, self.cords)
         self.widgets.draw(screen)
 
     def sync_widgets_cords(self):
+        """Синхронизация координат виджетов относительно координат меню"""
         for widget in self.widgets:
             widget.rect.x += self.cords[0]
             widget.rect.y += self.cords[1]
 
     def set_text(self):
+        """Установка текста для меню"""
         self.text_surface = pg.sprite.Sprite(self.widgets)
         self.text_surface.image = scalex(pause_menu_font.render(self.text, False, pg.Color("white")),
                                          common_pause_menu_scale_factor)

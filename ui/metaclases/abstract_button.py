@@ -4,6 +4,7 @@ import pygame as pg
 
 
 class AbstractButton(pg.sprite.Sprite):
+    """Абстрактный класс кнопки"""
     def __init__(self, x: int, y: int, call_back_function: callable):
         super().__init__()
         self.call_back_function = call_back_function
@@ -12,6 +13,7 @@ class AbstractButton(pg.sprite.Sprite):
         self.rect.y = y
 
     def handle_event(self, event):
+        """Обработка событий"""
         if event.type == pg.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(*event.pos):
                 self.call_back_function()

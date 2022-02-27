@@ -11,10 +11,12 @@ from userevents import GAME_EVENT_TYPE
 
 class PauseMenu(AbstractMenu):
     def __init__(self, *args):
+        """Инициализация"""
         self.text = "Игра остановлена"
         super().__init__(*args)
 
     def init_widgets(self):
+        """Инициализация виджетов"""
         buttons_y = 350 * common_pause_menu_scale_factor
         self.resume_btn = game_play(self.image.get_width() // 2, buttons_y,
                                     init_scaling=buttons_pause_menu_scale_factor,
@@ -28,6 +30,7 @@ class PauseMenu(AbstractMenu):
         self.widgets = pg.sprite.Group(self.resume_btn, self.home_btn, self.reset_btn)
 
     def handle_event(self, event):
+        """Обработка событий"""
         if event.type == pg.MOUSEBUTTONDOWN:
             for widget in self.widgets:
                 if isinstance(widget, OnlyImageButton):

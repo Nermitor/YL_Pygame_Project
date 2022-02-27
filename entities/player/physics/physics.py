@@ -19,4 +19,5 @@ FAST_RUN_SPEED = player_physics['fast_run_speed'] * total_scale_factor
 
 
 def totalize(x):
+    """Приводит переменную к стандарту размера"""
     return total_scale_factor * x

@@ -5,6 +5,7 @@ from .metaclases.abstract_button import AbstractButton
 
 
 class OnlyImageButton(AbstractButton):
+    """Класс кнопки с изображением"""
     def __init__(self, x: int, y: int, image, call_back_function, scaling, **kwargs):
         self.image = scalex(image, scaling)
         if (addictions := kwargs.get("addictions")) is not None:

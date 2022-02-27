@@ -12,6 +12,7 @@ scale_factor = common['scale_factor'] * check_points['scale_factor']
 
 
 class AbstractCheckPoint(pg.sprite.Sprite):
+    """Абстрактный класс для чекпоинтов"""
     def __init__(self, x, y, image):
         super().__init__()
         self.image = scalex(image, scale_factor)
@@ -20,6 +21,7 @@ class AbstractCheckPoint(pg.sprite.Sprite):
 
     @staticmethod
     def from_tile_cords(tile_cords, tile_size, image):
+        """Инициализация координат из координаты ячейки"""
         tile_x, tile_y = tile_cords
         tile_width, tile_height = tile_size
         return __class__(tile_x * tile_width, tile_y * tile_height, image)

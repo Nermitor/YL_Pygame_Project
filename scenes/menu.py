@@ -10,6 +10,7 @@ screen_width, screen_height = config['common']['screen_size']
 
 
 class MainMenu(MetaScene):
+    """Главное меню игры"""
     def __init__(self):
         self.bg = pg.image.load("scenes/resources/menu_bg.jpg").convert()
         self.start_btn = menu_start(screen_width // 2, 300)
@@ -25,12 +26,11 @@ class MainMenu(MetaScene):
         )
 
     def draw(self, screen):
+        """Отрисовка"""
         screen.blit(self.bg, (0, 0))
         self.all_widgets.draw(screen)
 
-    def update(self):
-        pass
-
     def handle_event(self, event):
+        """Обработка событий"""
         for widget in self.all_widgets.sprites():
             widget.handle_event(event)

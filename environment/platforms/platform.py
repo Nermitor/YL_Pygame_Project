@@ -12,6 +12,7 @@ scale_factor = common['scale_factor'] * platform['scale_factor']
 
 
 class Platform(pg.sprite.Sprite):
+    """Класс платформы"""
     def __init__(self, x, y, image: pg.Surface):
         super().__init__()
         self.image = scalex(image, scale_factor)
@@ -20,9 +21,8 @@ class Platform(pg.sprite.Sprite):
 
     @staticmethod
     def from_tile_cords(tile_cords, tile_size, image):
+        """Инициализация координат из координат ячейки"""
         tile_x, tile_y = tile_cords
         tile_width, tile_height = tile_size
         return Platform(tile_x * tile_width, tile_y * tile_height, image)
 
-    def update(self, *args, **kwargs):
-        pass
