@@ -59,3 +59,6 @@ class UITimer(pg.sprite.Sprite):
     def reset(self):
         """Сброс таймера"""
         self.time = 0
+
+    def handle_event(self, *args, **kwargs):
+        pass
